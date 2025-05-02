@@ -1,0 +1,41 @@
+This is a file where i will put all the instruction that are required to make word count project for scala
+1. locate the spark folder and open the terminal in its /bin folder -- it should be look like
+Jarvis@/hoem/spark/bin/:
+2. You need to make 2 files , 1-> Code containing Scala file 2-> Text containing txt file
+3. Make scala code file as :-
+4. If you cannot find bin folder do :- which spark-shell 
+it will provide you the the path of the bin folder
+bash:- sudo nano WordCount.scala
+
+// Create a new input1.txt file
+
+    val input = sc.textFile("input1.txt")
+
+    // Create a new RDD by splitting the input RDD on the basis of space
+    val words = input.flatMap(x => x.split(" "))
+
+    // Create a new RDD by mapping each word to a tuple of (word, 1)
+    val counts = words.map(x => (x, 1))
+
+    // Create a new RDD by reducing the tuples by key
+    val reducedCounts = counts.reduceByKey((x, y) => x + y)
+
+    // Save the RDD to a file
+    reducedCounts.saveAsTextFile("output1.txt")
+
+    // Print the contents of the file
+    reducedCounts.foreach(println)
+ 
+keystrokes:- ctrl + o , ENTER, ctrl + x
+
+4. make the text file "test.txt" or any other name that you prefer
+ bash :- sudo nano test.txt
+Now write any random string of words , example -- Hello Hello me name good coder , coder
+save the file with same keystrokes as scala file
+
+5.Save the file as wordcount.scala
+
+Compile and run the program ```bash
+
+    $ ./spark-shell
+    scala> :load wordcount.scala
